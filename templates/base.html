@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+{% load static %}
+{% load django_htmx %}
+
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/font-awesome.css' %}">
+    <link rel="stylesheet" href="{% static 'css/tasks_style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/task_style.css' %}">
+    <link rel="stylesheet" href="{% static 'bootstrap-icons/bootstrap-icons.css' %}">
+    <title>
+      {% block title %}TO DO APP {% endblock %}
+    </title>
+    <style>
+      .hyperlink-underline {
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+    <!-- As a heading -->
+    <div id="home">
+      {% include "nav.html" %}    
+      <div class="container">
+        {% block content %}
+        {% endblock %}
+      </div>
+    </div>
+    
+    <script>
+    htmx.onLoad(function(content) {
+      var sortables = content.querySelectorAll(".sortable");
+      for (var i = 0; i < sortables.length; i++) {
+        var sortable = sortables[i];
+        new Sortable(sortable, {
+            animation: 150,
+            ghostClass: 'blue-background-class'
+        });
+      }
+    })
+    </script>
+    <script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'htmx/htmx.min.js' %}"></script>
+    <script src="{% static 'hyperscript.js' %}"></script>
+    <script src="{% static 'tasks.js' %}"></script>
+    <script src="{% static 'tasks_js.js' %}"></script>
+    <script src="{% static 'jquery.min.js' %}"></script>
+    <script type="text/javascript" charset="utf-8">
+      function closeModal() {
+	      var container = document.getElementById("modals-here")
+	      var backdrop = document.getElementById("modal-backdrop")
+	      var modal = document.getElementById("modal")
+
+	      modal.classList.remove("show")
+	      backdrop.classList.remove("show")
+
+	      setTimeout(function() {
+		      container.removeChild(backdrop)
+	        container.removeChild(modal)
+	      }, 200)
+      }
+    </script>
+  </body>
+</html>

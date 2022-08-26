@@ -1,0 +1,74 @@
+
+<br>
+<section>
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col col-xl-10">
+
+        <div class="card" style="border-radius: 15px;">
+          <div class="card-body p-5">
+
+            <h6 class="mb-3">{{ request.user.username }} Todo List</h6>
+
+            <form class="d-flex justify-content-center align-items-center mb-4">
+              <div class="form-outline flex-fill">
+                <input type="text" id="form3" class="form-control form-control-lg" name="taskname"/>
+                <label class="form-label" for="form3">What do you need to do today?</label>
+              </div>
+              <button type="submit" class="btn btn-primary btn-lg ms-2" hx-post="{% url 'add_task' %}" hx-target="#tasks">Add</button>
+            </form>
+
+            <ul class="list-group mb-0">
+              {% for task in tasks %}
+              {% if task.done %}
+              <li
+                class="list-group-item d-flex justify-content-between align-items-center border-start-0 border-top-0 border-end-0 border-bottom rounded-0 mb-2">
+                <div class="d-flex align-items-center">
+                  <input 
+                    class="form-check-input me-2" 
+                    type="checkbox" 
+                    aria-label="..." 
+                    checked
+                    value="{{ task.done }}" 
+                    hx-post= "{% url 'complete_task' task.id %}"
+                    hx-swap= "innerHTML"
+                    hx-target = "#tasks"
+                    hx-trigger= "click"
+                  />
+                  {{ task.name }}
+                </div>
+                <a data-mdb-toggle="tooltip" title="Remove item" hx-delete="{% url 'delete-task' task.pk %}" hx-target="#tasks" hx-confirm="Are you sure you wish to delete?">
+                  <i class="bi bi-x text-primary"></i>
+                </a>
+              </li>
+              {% else %}
+              <li
+                class="list-group-item d-flex justify-content-between align-items-center border-start-0 border-top-0 border-end-0 border-bottom rounded-0 mb-2">
+                <div class="d-flex align-items-center">
+                  <input 
+                    class="form-check-input me-2" 
+                    type="checkbox" 
+                    aria-label="..." 
+                    value="{{ task.done }}" 
+                    hx-post= "{% url 'complete_task' task.id %}"
+                    hx-swap= "innerHTML"
+                    hx-target = "#tasks"
+                    hx-trigger= "click"
+                  />
+                  {{ task.name }}
+                </div>
+                <a data-mdb-toggle="tooltip" title="Remove item" hx-delete="{% url 'delete-task' task.pk %}" hx-target="#tasks" hx-confirm="Are you sure you wish to delete?">
+                  <i class="bi bi-x text-primary"></i>
+                </a>
+              </li>
+              {% endif %}
+              {% empty %}
+              <li>No item on your list</li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

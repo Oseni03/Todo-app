@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load widget_tweaks %}
+
+{% block content %}
+<br>
+<div class="container">
+  <h2>Sign Up to start your list</h2>
+  <br>
+  <form class="form-group" method="POST">
+    {% csrf_token %}
+    
+    <label>{{ form.username.label_tag }}</label>
+    {{ form.username.errors }}
+    {% render_field form.username class="form-control" hx-post="/check-register_username/" hx-swap="outerhtml" hx-trigger="keyup delay:2s" hx-target="#username-errors" %}
+    <div id="username-errors"></div>
+    
+    <label>{{ form.first_name.label_tag }}</label>
+    {{ form.first_name.errors }}
+    {{ form.first_name }}
+    
+    <label>{{ form.last_name.label_tag }}</label>
+    {{ form.last_name.errors }}
+    {{ form.last_name }}
+    
+    <label>{{ form.email.label_tag }}</label>
+    {{ form.email.errors }}
+    {% render_field form.email class="form-control" hx-post="/check-email/" hx-swap="outerhtml" hx-trigger="keyup delay:2s" hx-target="#email-errors" %}
+    <div id="email-errors"></div>
+    
+    <label>{{ form.password.label_tag }}</label>
+    {{ form.password.errors }}
+    {{ form.password }}
+    
+    <label>{{ form.password2.label_tag }}</label>
+    {{ form.password2.errors }}
+    {% render_field form.password2 class="form-control" hx-post="/check-password/" hx-swap="outerhtml" hx-trigger="keyup delay:2s" hx-target="#password-errors" %}
+    <div id="password-errors"></div>
+    <br>
+    
+    <input class="btn btn-secondary" type="submit" name="submit" id="submit" value="Sign Up" />
+  </form>
+  <br>
+  <p>Already have an account? <a href="{% url 'login' %}">Login</a></p>
+</div>
+{% endblock %}

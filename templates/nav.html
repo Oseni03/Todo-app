@@ -1,0 +1,28 @@
+    <nav class="navbar navbar-dark bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">ToDo</a>
+        <ul class="nav justify-content-end">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home</a>
+          </li>
+          {% if request.user.is_authenticated %}
+          <li class="nav-item"
+            hx-post="{% url 'logout' %}"
+            hx-confirm="Are you sure you wish to log out?"
+            hx-target="#home"
+            hx-swap="outerHTML"
+              >
+            <span class="nav-link">Logout</span>
+          </li>
+          {% else %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'login' %}">Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'register' %}">Register</a>
+          </li>
+          {% endif %}
+        </ul>
+      </div>
+      <!-- Navbar content -->
+    </nav>    
