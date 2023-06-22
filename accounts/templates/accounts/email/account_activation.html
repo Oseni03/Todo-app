@@ -1,0 +1,11 @@
+{% load static %}
+{% autoescape off %}
+Hi, {{ user.first_name }}
+
+<div class="text-center">
+    welcome to Trackit, click the link below to verify your email.
+    <br>
+    {{ domain }}{% url "accounts:account_activate" uidb64=uid token=token %}
+</div>
+
+{% endautoescape %}

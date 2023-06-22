@@ -19,16 +19,20 @@
         cursor: pointer;
       }
     </style>
+    
+    {# <script defer src="{% static "js/alpine.js" %}"></script> #}
   </head>
   <body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
     <!-- As a heading -->
-    <div id="home">
+    <header>
       {% include "nav.html" %}    
+    </header>
+    <main>
       <div class="container">
         {% block content %}
         {% endblock %}
       </div>
-    </div>
+    </main>
     
     <script>
     htmx.onLoad(function(content) {
@@ -43,12 +47,12 @@
     })
     </script>
     <script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
-    <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
     <script src="{% static 'htmx/htmx.min.js' %}"></script>
-    <script src="{% static 'hyperscript.js' %}"></script>
-    <script src="{% static 'tasks.js' %}"></script>
-    <script src="{% static 'tasks_js.js' %}"></script>
-    <script src="{% static 'jquery.min.js' %}"></script>
+    <script src="{% static 'htmx/hyperscript.js' %}"></script>
+    <script src="{% static 'js/tasks.js' %}"></script>
+    <script src="{% static 'js/tasks_js.js' %}"></script>
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    
     <script type="text/javascript" charset="utf-8">
       function closeModal() {
 	      var container = document.getElementById("modals-here")
@@ -63,6 +67,23 @@
 	        container.removeChild(modal)
 	      }, 200)
       }
+    </script>
+    <script>
+        $(document).ready(function() {
+            let viewLoginPwd = false;
+            let getPwdView = $("#pwd");
+            
+            $("#viewPwd").click(function() {
+                if (viewLoginPwd === false)
+                {
+                    getPwdView.attr("type", "text");
+                    viewLoginPwd = true;
+                } else if (viewLoginPwd === true) {
+                    getPwdView.attr("type", "password");
+                    viewLoginPwd = false;
+                }
+            });
+        });
     </script>
   </body>
 </html>
